@@ -13,17 +13,17 @@
     </select>
 
     <label>Skills (press alt + comma to add):</label>
-
     <input type="text" v-model="tempSkill" @keyup.alt="addSkill">
     <div v-for="skill in skills" :key="skill" class="pill">
-      {{ skill }}
+
+      <span @click="deleteSkill(skill)">{{ skill }}</span>
+
     </div>
 
     <div class="terms">
       <input type="checkbox" v-model="terms" required>
       <label>Accept terms and conditions</label>
     </div>
-
   </form>
 
   <p>Email: {{ email }}</p>
@@ -47,15 +47,20 @@ export default {
   },
   methods: {
     addSkill(e) {
-
       if(e.key === ',' && this.tempSkill) {
         if (!this.skills.includes(this.tempSkill)) {
           this.skills.push(this.tempSkill)
         }
         this.tempSkill = ''
       }
-      
     },
+
+    deleteSkill(skill) {
+      this.skills = this.skills.filter(item => {
+        return skill !== item
+      })
+    }
+    
   }
 }
 </script>
